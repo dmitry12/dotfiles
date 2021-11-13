@@ -7,8 +7,7 @@ alias vim="nvim"
 set PATH /usr/local/bin $PATH
 set PATH node_modules/.bin $PATH
 set PATH bin $PATH
-set PATH ~/bin $PATH
-set PATH ~/.dotfiles/bin $PATH
+set PATH ~/.local/bin $PATH
 set PATH ~/.node_modules/bin $PATH
 
 set ANDROID_HOME $HOME/Library/Android/sdk

@@ -3,7 +3,6 @@
 FOLDERS=`cat ./INSTALL_FOLDERS | xargs`
 
 for FOLDER_NAME in $FOLDERS; do
+  echo "Uninstalling $FOLDER_NAME"
   stow -D $FOLDER_NAME
-  stow $FOLDER_NAME
-  echo "Installing $FOLDER_NAME"
 done 

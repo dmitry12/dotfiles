@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+FOLDERS=(
+  fish
+  tmux
+)
+
+for FOLDER_NAME in ${FOLDERS[*]}; do
+  echo "Installing $FOLDER_NAME"
+  stow -D $FOLDER_NAME
+  stow $FOLDER_NAME
+done 

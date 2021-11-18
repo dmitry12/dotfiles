@@ -31,3 +31,8 @@ set -x FZF_DEFAULT_COMMAND 'ag -g ""'
 
 fish_vi_key_bindings
 
+# Trying to get used to ranger
+abbr cd "echo 'Try ranger'; cd"
+abbr mv "echo 'Try ranger'; mv"
+abbr cp "echo 'Try ranger'; cp"
+abbr ls "echo 'Try ranger'; ls"

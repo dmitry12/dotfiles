@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+  selected=$(( \
+  find ~/dotfiles/neovim/.config/nvim/lua/custom; \
+  find ~/dotfiles/tmux; \
+  find ~/dotfiles/bin; \
+  ) | grep -v ".git\|plugins\|configs" | fzf)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . _)
+
+open_selected_in_vim () {
+  tmux send-keys -t $selected_name:1 "vim $selected" C-m
+  tmux attach -t $selected_name
+}
+
+random_name=$(openssl rand -base64 12)
+
+# tmux_running=$(pgrep tmux)
+# No tmux and no session
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+  tmux new-session -t fav -c $selected -d
+  tmux send-keys -t $selected_name.$random_name "vim $selected" C-m
+  tmux attach -t $selected_name.$random_name
+fi
+
+# Tmux running, need create session
+if ! tmux has-session -t $selected_name 2> /dev/null; then
+    tmux new-session -ds $selected_name.$random_name -c $selected -d
+    tmux send-keys -t $selected_name.$random_name "vim $selected" C-m
+    tmux attach -t $selected_name.$random_name
+fi
+
+# Tmux not attached
+if [[ -z $TMUX ]]; then
+  tmux attach-session -t $selected_name
+  open_selected_in_vim
+# In tmux now
+else
+    tmux switch-client -t $selected_name
+    open_selected_in_vim
+fi
+
+
+### if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+###   tmux new-session -t $selected_name.$random_name -c $selected -d
+###   tmux send-keys -t $selected_name.$random_name "vim $selected" C-m
+###   tmux attach -t $selected_name.$random_name
+### fi
+### 
+### # Tmux running, need create session
+### if ! tmux has-session -t $selected_name 2> /dev/null; then
+###     tmux new-session -ds $selected_name.$random_name -c $selected -d
+###     tmux send-keys -t $selected_name.$random_name "vim $selected" C-m
+###     tmux attach -t $selected_name.$random_name
+### fi
+### 
+### # Tmux not attached
+### if [[ -z $TMUX ]]; then
+###   tmux attach-session -t $selected_name
+###   open_selected_in_vim
+### # In tmux now
+### else
+###     tmux switch-client -t $selected_name
+###     open_selected_in_vim
+### fi
+### 
+### 

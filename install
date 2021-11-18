@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FOLDERS=`cat ./INSTALL_FOLDERS | xargs`
+FOLDERS=`cat ./install-folders | xargs`
 
 for FOLDER_NAME in $FOLDERS; do
   stow -D $FOLDER_NAME

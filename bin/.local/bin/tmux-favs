@@ -6,6 +6,7 @@ else
   selected=$(( \
   find ~/dotfiles/neovim/.config/nvim/lua/custom; \
   find ~/dotfiles/tmux; \
+  find ~/dotfiles/ranger; \
   find ~/dotfiles/bin; \
   ) | grep -v ".git\|plugins\|configs" | fzf)
 fi
